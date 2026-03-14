@@ -2,10 +2,9 @@ import torch
 import torch.nn.functional as F
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-MODEL_DIR = "results_roberta_pan24"  # новая модель RoBERTa
-MAX_LENGTH = 128  # тот же MAX_LENGTH, что при обучении
+MODEL_DIR = "results_roberta_pan24"
+MAX_LENGTH = 128  
 
-# Поддержка GPU, если доступен
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_DIR)
@@ -16,9 +15,7 @@ model.eval()
 
 @torch.inference_mode()
 def predict(text: str):
-    """Возвращает метку и вероятности для текста"""
     
-    # Токенизация
     tokens = tokenizer(
         text,
         return_tensors="pt",
@@ -28,11 +25,10 @@ def predict(text: str):
     )
     tokens = {k: v.to(device) for k, v in tokens.items()}
 
-    # Логиты и вероятности
     logits = model(**tokens).logits
     probs = F.softmax(logits, dim=-1).squeeze(0).cpu().numpy()
 
-    # Предсказание класса
+    # Prediction of class
     pred = int(probs.argmax())
     label = "Human" if pred == 0 else "Modified/Machine"
 

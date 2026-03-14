@@ -133,7 +133,7 @@ def main():
     # ----------------------------
     y = np.array(tokenized["train"]["labels"])
     weights = compute_class_weight(class_weight="balanced", classes=np.array([0, 1]), y=y)
-    weights = np.clip(weights, 0.5, 1.0)  # безопасный диапазон
+    weights = np.clip(weights, 0.5, 1.0)
     class_weights = torch.tensor(weights, dtype=torch.float)
     print("Class weights (clipped):", weights)
 
