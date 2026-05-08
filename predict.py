@@ -46,10 +46,12 @@ if __name__ == "__main__":
     print("Loading models...")
     roberta_tokenizer, roberta_model = load_model("results_roberta_pan24")
     modernbert_tokenizer, modernbert_model = load_model("results_modernbert_pan24")
+    electra_tokenizer, electra_model = load_model("results_electra_pan24")
 
     MODELS = [
-        ("RoBERTa-base",   roberta_tokenizer,    roberta_model,    128),
+        ("RoBERTa-base",    roberta_tokenizer,    roberta_model,    128),
         ("ModernBERT-base", modernbert_tokenizer, modernbert_model, 512),
+        ("ELECTRA-base",    electra_tokenizer,    electra_model,    512),
     ]
 
     machine_text = (
